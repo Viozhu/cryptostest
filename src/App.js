@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, Button } from "@material-ui/core";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,8 +7,19 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Nav from "./Nav";
+import "./f.css";
 
 const useStyles = makeStyles({
+  white: {
+    background: "#ffffff",
+    color: "#000000",
+    width: "100%",
+  },
+  black: {
+    background: "#000000",
+    color: "#ffffff",
+    width: "100%",
+  },
   root: {
     minWidth: 275,
     background:
@@ -25,10 +36,16 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  rooto: { display: "flex", flexDirection: "row", flexGrow: 1 },
 });
 
 export default function App() {
   const [state, setstate] = useState([]);
+  const [theme, setTheme] = useState("");
+
+  const cambio = () => {
+    theme === classes.black ? setTheme(classes.white) : setTheme(classes.black);
+  };
 
   useEffect(() => {
     const timerID = setInterval(() => {
@@ -76,10 +93,20 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={theme}>
       <Nav />
+      <Button onClick={cambio} color="primary" variant="contained">
+        DarkMode
+      </Button>
       <Line data={data} options={options} width="200" height="50" />
-      <Grid container spacing={1}>
+      <Grid
+        className={classes.rooto}
+        container
+        spacing={1}
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
         {state &&
           filterCrypto.slice(0, 7).map((s) => (
             <Grid item xs={3}>
